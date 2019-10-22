@@ -72,7 +72,7 @@ there is a giant welding torch in the corner.))))
 (defun game-repl ()
   (let ((cmd (game-read)))
     (unless (eq (car cmd) 'quit)
-      (game-print (game-eval cmd)))
+      (game-print (game-eval cmd))
       (game-repl))))
 
 (defun game-read ()
@@ -84,7 +84,7 @@ there is a giant welding torch in the corner.))))
 
 (defparameter *allowed-commands* '(look walk pickup inventory))
 
-(defun geme-eval (sexp)
+(defun game-eval (sexp)
   (if (member (car sexp) *allowed-commands*)
       (eval sexp)
       '(i do not know that command.)))
