@@ -101,9 +101,9 @@ there is a giant welding torch in the corner.))))
             (t (cons (char-downcase item) (tweak-text rest nil nil)))))))
 
 (defun game-print (lst)
-  (princ (coerce (tweak-text (coerce (string-trim"() "
-                                (prin1-to-string lst))
-                            'list)
+  (princ (coerce (tweak-text (coerce (string-trim "() "
+                                                  (prin1-to-string lst))
+                                    'list)
                   t
                   nil)
             'string))
