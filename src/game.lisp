@@ -104,7 +104,7 @@ there is a giant welding torch in the corner.))))
   (princ (coerce (tweak-text (coerce (string-trim "() "
                                                   (prin1-to-string lst))
                                     'list)
-                  t
-                  nil)
-            'string))
-    (fresh-line))
+                              t
+                              nil)
+                  'string))
+  (fresh-line))
