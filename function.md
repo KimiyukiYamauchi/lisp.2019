@@ -245,3 +245,26 @@ nilは偽も表す
   - mapcon
   - mapl
   - maplist
+
+  ### 型変換
+  #### (coerce オブジェクト 変換する型)
+  ``` lisp
+  (coerce "THIS IS" 'list) => (#\T #\H #\I #\S #\Space #\I #\S)
+  (coerce '(#\T #\H #\I #\S #\Space #\I #\S) 'string) => "THIS IS"
+  ```
+
+  #### (print1-to-string リスト)
+  ``` lisp
+  (print1-to-string ('1 2 3)) => "(1 2 3)"
+  ```
+
+  #### (string-trim 削除する文字列 文字列)
+  ``` lisp
+  (string-trim "(1 2 3)") => "1 2 3"
+  ```
+
+  #### (substitute-if 置き換える文字 関数 オブジェクト)
+  ``` lisp
+  (substitute-if #\e #'digit-char-p "I'm a l33t hack3r!) => "I'm a leet hacker!"
+  (substitute-if 0 #'oddp '(1 2 3 4 5 6 7 8)) => (0 2 0 4 0 6 0 8)
+  ```
