@@ -15,9 +15,9 @@
   (unless (eql a b)
   (list (cons a b) (cons b a))))
 
-  (defun make-edge-list ()
-    (apply #'append (loop repeat *edge-num*
-                          collect (edge-pair (random-node) (random-node)))))
+(defun make-edge-list ()
+  (apply #'append (loop repeat *edge-num*
+                        collect (edge-pair (random-node) (random-node)))))
 
 (defun direct-edges (node edge-list)
   (remove-if-not (lambda (x)
