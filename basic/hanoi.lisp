@@ -1,0 +1,16 @@
+(defun hanoi (n &optional (from 'from) (to 'to) (other 'other))
+  (if (= n 1)
+    (cons (cons from to) nil)
+    (append
+      (hanoi (- n 1) from other to)
+      (hanoi 1 from to other)
+      (hanoi (- n 1) other to from) )))
+
+(defun hanoi4 (n from to other1 other2)
+  (if (< n 3)
+    (hanoi n from to other1)
+    (if (= n 3)
+      (append (list (cons from other1)) (hanoi 2 from to other2) (list (cons other1 to)))
+      (append (hanoi4 (- n 3) from other1 other2 to)
+              (hanoi 3 from to other2)
+              (hanoi4 (- n 3) other1 to other2 from) ))))
