@@ -20,3 +20,10 @@
 - (second people) => (car (cdr people))
 7. (third people)と同様処理をcar/cdrまたはfirst/restで行う
 8. (fourth people)と同様処理をcar/cdrまたはfirst/restで行う
+- 条件に合うアトムをリストから作事する(remove)
+- peolpeリストから年齢が9のアトムを削除する
+  - (remove 9 people :key #'second)
+- peopleリストから年齢が20以上のアトムを削除する
+  - (remove 20 people :test #'<= :key #'second)
+- (setf people '((RIE 19 female) (TOM 22 male) (KEVIN 37 male) (ERIKA 9 female)))
+9. pepleリストから男性(male)のアトムを削除する
