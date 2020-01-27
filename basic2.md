@@ -1,0 +1,27 @@
+- (関数名 引数1 引数2 ...)
+- car(first)
+  - リスト: (stones scissors papers)
+  - (car '(stones scissors papers))
+    - => stones
+- cdr(rest)
+  - (cdr '(stones scissors papers))
+    - => (scissors papers)
+- second
+  - (second '(stones scissors papers))
+- null
+  - (null (car '(A))) => nil
+  - (null (cdr '(A))) => T
+- cons
+  - (cons 'A '(B C)) => (A B C)
+  - (cons 'A 'B) => (A . B)
+  - (cons (cons 'A 'B) nil) => ((A . B))
+  - (cons 'A (cons 'B nil)) => (A B)
+- atom
+  - (atom 'stones) => T
+  - (atom ()) => T
+  - (atom nil) => T
+- (setf people '((RIE 19) (TOM 22) (KEVIN 37) (ERIKA 9)))
+- (thrid people)
+  - (car (cdr (cdr people )))
+_ (fourth people)
+  - (car (cdr (cdr (cdr people ))))
