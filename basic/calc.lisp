@@ -85,3 +85,68 @@
 (defun !length2 (list)
   (cond ((null (cdr list)) 1)
         (t (1+ (!length2 (cdr list)))) ))
+
+(defun random-animal()
+  (nth (random 5) '("dog" "tick" "tiger" "walrus" "kangaroo")))
+
+(loop repeat 10
+  do (format t "~5t~a ~15t~a ~25t~a~%"
+        (random-animal)
+        (random-animal)
+        (random-animal)))
+
+(loop repeat 10
+  do (format t "~30<~a~;~a~;~a~>~%"
+        (random-animal)
+        (random-animal)
+        (random-animal)))
+
+(loop repeat 10
+  do (format t "~30:@<~a~;~a~;~a~>~%"
+        (random-animal)
+        (random-animal)
+        (random-animal)))
+
+(loop repeat 10
+  do (format t "~10:@<~a~>~10:@<~a~>~10:@<~a~>~%"
+        (random-animal)
+        (random-animal)
+        (random-animal)))
+
+(defparameter *animal* (loop repeat 10 collect (random-animal)))
+
+(format t "~{I see a ~a! ~}" *animal*)
+
+(format t "~{I see ~a... or was it a~a?~%~}" *animal*)
+
+(format t "|~{~<|~%|~,33:;~2d ~>~}|" (loop for x below 100 collect x))
+
+(defun robots ()
+  (loop named main
+        with directions = '((q . -65) (w . -64) (e . -63) (a . -1)
+                            (d . 1)   (z . 63)  (x .64)   (c 65))
+        for pos = 544
+        then (progn (format t "~%qwe/asd/zxc to movve, (t)eleport, (l)eave:")
+                    (force-output)
+                    (let* ( (c (read))
+                            (d (assoc c (directions))))
+                      (cond (d (+ pos (cdr d)))
+                            ((eq 't c)  (random 1024))
+                            ((eq 'l c)  (return-form main 'bye))
+                            (t pos))))
+        for monsters = (loop repeat 10
+                          collect (random 1024))
+        then (loop for mpos in monsters
+                collect (if (> (count mpos monsters) 1)
+                            mpos
+                            (cdar (sort (loop for (k .d) in directions
+                                              for new-mpos = (+ mpos d)
+                                              collect (cons (+  (abs (- (mod new-mpos 64)
+                                                                        (mod pos 64)))
+                                                                (abs (- (ash new-mpos -6)
+                                                                        (ash pos -6))))
+                                                            new-mpos))
+                                        '<
+                                        :key #'car))))
+        when (loop for mpos in monsters
+                )))
