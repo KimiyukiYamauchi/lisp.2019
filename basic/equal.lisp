@@ -1,4 +1,4 @@
-(defun equal ( x y)
+(defun !equal ( x y)
   (cond ((atom x) (eq x y))
         ((atom y) nil)  ; ここに来たときはxはアトムじゃない
         ((equal (car x) (car y))
