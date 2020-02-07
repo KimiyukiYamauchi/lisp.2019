@@ -67,6 +67,7 @@
   (car (cdr (cdr list))) )
 (defun !fourth (list)
   (car (cdr (cdr (cdr list)))) )
+
 ; 引数のlistの最後の要素を返す関数
 (defun last-elem (list)
   (cond ((null list) nil)
@@ -75,6 +76,15 @@
 (defun last-elem2 (list)
   (cond ((null (cdr list)) (car list))
         (t (last-elem2 (cdr list))) ))
+
+(defun last-elem (list)
+  (do ((x (setq x list)))
+      ((null (cdr x)) (car x)) 
+      (setq x (cdr x)) ))
+
+(defun last-elem (list)
+  (do ((x (setq x list) (setq x (cdr x))))  ; 変数制限、初期化、ループの頭に戻ってきたら実行する処理
+      ((null (cdr x)) (car x)) )) ; 終了条件、戻り値
 
 ; 引数のlistの要素の個数を返す関数
 (defun !length (list)
@@ -85,6 +95,52 @@
 (defun !length2 (list)
   (cond ((null (cdr list)) 1)
         (t (1+ (!length2 (cdr list)))) ))
+
+(defun !length (x)
+  (do ((count 0 (1+ count)))
+      ((null x) count)
+      (setq x (cdr x)) ))
+
+; リストのn番目の要素を返す関数
+(defun !nth (n x)
+  (cond ((< n 0) (error 'illegal-argument 'nth  n x))
+        (t (!nth2 n x)) ))
+
+(defun !nth2 (n x)
+  (cond
+  ; xがnilだったらnil
+        ((null x) nil)
+  ; xがnilだったらerror
+        ;((null x) (error 'overrun 'nth n x))
+  ; nが1だったら(car x)
+        ((= n 0) (car x))
+  ; nが2以上だったら再帰呼び出し
+    ; (1- n)
+    ; (cdr x)
+        (t (!nth2 (1- n) (cdr x))) ))
+
+(defun !nth2 (n x)
+  (do ( (i (setq i 0) (setq i (1+ i)))
+        (tmp (setq tmp x)) )
+      ((= i n) (car tmp))
+      (setq tmp (cdr tmp)) ))
+
+; ２つのリストをつなぐ関数
+(defun !append (a b)
+  (cond 
+        ((null a) b)
+        (t (cons (car a) (!append (cdr a) b))) ))
+
+(defun !append (a b)
+  (do ((count (setq count (1- (!length a))) (setq count (1- count)))
+      (tmp (setq tmp b)))
+      ((= count 0) (cons (car a) tmp))
+      (setq tmp (cons (!nth count a) tmp)) ))
+
+
+(cons 
+  (car '(east south)) 
+  (cons (cadr '(east south)) '(west north)) )
 
 (defun random-animal()
   (nth (random 5) '("dog" "tick" "tiger" "walrus" "kangaroo")))
