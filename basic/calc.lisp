@@ -137,6 +137,30 @@
       ((= count 0) (cons (car a) tmp))
       (setq tmp (cons (!nth count a) tmp)) ))
 
+; リストのトップレベルを逆転したリストを返す関数
+; (1 2 3 4 5) -> (5 4 3 2 1)
+; (1 (2 3 4) 5) -> (5 (2 3 4) 1)
+; 累積変数を利用した再帰呼び出し
+(defun !reverse (x)
+  (rev2 x nil))
+
+(defun rev2 (x y) ; x => 元の値、y => リバースした値
+  (cond ((null x) y)
+        (t (rev2 (cdr x) (cons (car x) y))) ))
+
+(defun !reverse (x)
+  (loop 
+    when x (return result)
+    do
+      (setq result (cons (car x) result))
+      (setq x (cdr x)) ))
+
+; 引数のリストを作成するためのconsの回数を返す関数
+; list => cons (car cdr)
+(defun cons-count (x)
+  (cond ((atom x) 0)
+        (t  (+ 1 (cons-count (car x))
+                  (cons-count (cdr x)) ))))
 
 (cons 
   (car '(east south)) 
