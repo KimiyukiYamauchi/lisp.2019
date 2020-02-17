@@ -149,11 +149,11 @@
         (t (rev2 (cdr x) (cons (car x) y))) ))
 
 (defun !reverse (x)
-  (loop 
-    when x (return result)
-    do
-      (setq result (cons (car x) result))
-      (setq x (cdr x)) ))
+  (let ((result))
+    (loop
+        (when  (null x) (return result))
+        (setq result (cons (car x) result))
+        (setq x (cdr x)) )))
 
 ; 引数のリストを作成するためのconsの回数を返す関数
 ; list => cons (car cdr)
@@ -161,6 +161,21 @@
   (cond ((atom x) 0)
         (t  (+ 1 (cons-count (car x))
                   (cons-count (cdr x)) ))))
+
+(defun cons-count (x)
+  (prog (todo count)
+    (setq count 0)
+    (return
+      (loop
+        (cond   ((atom x)
+                (cond (todo
+                        (setq x (car todo))
+                        (setq todo (cdr todo)) )
+                      (t (return count)) ))
+                (t (setq count (1+ count))
+                  (if (not (atom (cdr x)))
+                    (setq todo (cons (cdr x) todo)) )
+                  (setq x (car x)) ))))))
 
 (cons 
   (car '(east south)) 
