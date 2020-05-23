@@ -1,10 +1,15 @@
 (defun robots ()
   (loop named main
+		;; q w e
+		;; a @ d
+		;; z x c
+		;; 横幅: 64、縦幅: 16
+		;; 左上: 1、右下 2014
 		with directions = '((q . -65) (w . -64) (e . -63) (a . -1)
 						(d . 1)   (z . 63)  (x . 64)   (c . 65))
 		for pos = 544
 		then (progn (format t "~%qwe/asd/zxc to move, (t)eleport, (l)eave:")
-					(force-output)
+					(force-output)  ; 出力バッファを空にする
 					(let* ( (c (read))
 										(d (assoc c directions)))
 						(cond (d (+ pos (cdr d)))
