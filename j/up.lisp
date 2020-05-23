@@ -1,6 +1,9 @@
-(defparameter *width* 100)  ; マップの横幅
-(defparameter *height* 30)   ; マップの縦幅
-(defparameter *jungle* '(45 10 10 10))  ; ジャングルの位置と縦と横の幅
+;; (defparameter *width* 100) ; マップの横幅
+;; (defparameter *height* 30)    ; マップの縦幅
+;; (defparameter *jungle* '(45 10 10 10))  ; ジャングルの位置と縦と横の幅
+(defparameter *width* 50) ; マップの横幅
+(defparameter *height* 15)    ; マップの縦幅
+(defparameter *jungle* '(30 5 5 5))  ; ジャングルの位置と縦と横の幅
 (defparameter *plant-energy* 80)  ; 植物の持つ生命力、動物がこれを食べると80日生きられる
 
 ;; 植物の座標を保存するハッシュテーブル
@@ -90,4 +93,65 @@
             (mutation   (random 8)))
         (setf (nth mutation genes) (max 1 (+ (nth mutation genes) (random 3) -1)))
         (setf (animal-genes animal-nu) genes)
-        (push animal-nu *animal*) ))))
+        (push animal-nu *animals*) ))))
+
+;;; 士ミューレションの世界の1日
+(defun update-world()
+  (setf *animals*
+        ;; energyが0になっているanimalはリストから除く
+        (remove-if 
+          (lambda (animal)
+            (<= (animal-energy animal) 0))
+          *animals*))
+  
+  ;; それぞれの動物の活動
+  (mapc
+    (lambda (animal)
+      (turn animal) ; 方向を変える
+      (move animal) ; 移動する
+      (eat animal)  ; 食べる
+      (reproduce animal)) ; 増やす
+    *animals*)
+    
+  ;; 植物を追加する処理
+  (add-plants))
+
+;;; 世界を描く
+(defun draw-world ()
+  (loop for y 
+    below *height*  ; マップの高さ分の繰り返し
+    do (progn  
+              ;; マップの1行の描画処理
+              (fresh-line)
+              (princ "|") ; 左端の縦棒
+              (loop for x
+                    below *width*
+                    do (princ (cond
+                                ; その位置に動物がいればMを表示
+                                ((some (lambda (animal)
+                                          (and  (= (animal-x animal) x)
+                                                (= (animal-y animal) y)))
+                                        *animals*)
+                                    #\M)
+                                ; その位置に植物があれは#を表示
+                                ((gethash (cons x y) *plants*) #\*)
+                                ; その他はスペース表示
+                                (t #\space))))
+              (princ "|") ))) ; 右端の縦棒
+
+;;; ユーザインタフェース
+(defun evolution ()
+  (draw-world)
+  (fresh-line)
+  (let ((str (read-line)))
+    (cond 
+      ((equal str "quit") ())
+      (t  (let ((x (parse-integer str :junk-allowed t)))
+            (if x
+              (loop for i
+                below x
+                do (update-world)
+                if (zerop (mod i 1000))
+                  do (princ #\.) )
+              (update-world))
+            (evolution) )))))
