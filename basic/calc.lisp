@@ -216,3 +216,78 @@
 
 (format t "|~{~<|~%|~,33:;~2d ~>~}|" (loop for x below 100 collect x))
 
+(format 
+  t ; nil -> 文字列を返す
+    ; t -> コンソール(画面)出力
+    ; stream -> データを指定したstreamにだす
+  "I am printing ~s in the middle of this sentence."  ; 制御文字付き出力
+  "foo")  ; 書式に対応するデータ
+
+(format 
+  t 
+  "I am printing ~a in the middle of this sentence."  ; 制御文字付き出力
+  "foo")  ; 書式に対応するデータ
+
+(format 
+  t 
+  "I am printing ~10a in the middle of this sentence."  ; 制御文字付き出力
+  "foo")  ; 書式に対応するデータ
+
+(format 
+  t 
+  "I am printing ~10,3a in the middle of this sentence."  ; 制御文字付き出力
+  "foo")  ; 書式に対応するデータ
+
+(format 
+  t 
+  "I am printing ~,,4,'!a in the middle of this sentence."
+  "foo")  ; 書式に対応するデータ
+(format 
+  t 
+  "I am printing ~,,4,'!@a in the middle of this sentence."
+  "foo")  ; 書式に対応するデータ
+
+(format
+  t
+  "The number 1000 in hexadecimal is ~x"
+  1000)
+
+(format
+  t
+  "The number 1000 in binary is ~b"
+  1000)
+
+(format
+  t
+  "The number 1000 in decimal is ~d"
+  1000)
+
+(format
+  t
+  "The number 1000 in decimal is ~:d"
+  1000000)
+
+(format
+  t
+  "The number 1000 in decimal is ~10d"
+  1000000)
+
+(format
+  t
+  "The number 1000 in decimal is ~10,'xd"
+  1000000)
+
+(format
+  t
+  "PI can be estimated as ~4f"
+  3.141593)
+
+(format
+  t
+  "PI can be estimated as ~,4f"
+  3.141593)
+
+(format
+  t
+  "Percentages are ~,,2f percent"
+  0.77)
