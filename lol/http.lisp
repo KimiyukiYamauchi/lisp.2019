@@ -38,9 +38,9 @@
 
 (defun parse-url (s)
   (let* ((url (subseq s
-                              (+ 2 (position #\space s))
-                              (position #\space s :from-end t)))
-            (x (position #\? url)))
+                      (+ 2 (position #\space s))
+                      (position #\space s :from-end t)))
+        (x (position #\? url)))
     (if x
         (cons (subseq url 0 x) (parse-params (subseq url (1+ x))))
         (cons url '()))))
@@ -78,6 +78,6 @@
   (if (equal path "greeting")
     (let ((name (assoc 'name params)))
       (if (not name)
-        (princ "<html><form>What is your name?<input name='name' /></form></html>")
+        (princ "<html><body><form>What is your name?<input name='name' /></form></body></html>")
         (format t "<html>Nice to meet you, ~a!</html>" (cdr name))))
     (princ "Sorry... I don't know that page.")))
